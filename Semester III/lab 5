@@ -1,0 +1,53 @@
+def infix_to_postfix(exp):
+    stack = []
+    result = ""
+    priority = {'+': 1, '-': 1, '*': 2, '/': 2, '^': 3}
+
+    for ch in exp:
+        if ch.isalnum():
+            result += ch
+        elif ch == '(':
+            stack.append(ch)
+        elif ch == ')':
+            while stack and stack[-1] != '(':
+                result += stack.pop()
+            if stack:
+                stack.pop()
+        else:
+            while (stack and stack[-1] != '(' and
+                   priority.get(stack[-1], 0) >= priority[ch]):
+                result += stack.pop()
+            stack.append(ch)
+
+    while stack:
+        result += stack.pop()
+
+    return result
+
+exp = input("Enter infix expression: ")
+print(infix_to_postfix(exp))
+
+
+def evaluate_postfix(exp):
+    stack = []
+
+    for ch in exp:
+        if ch.isdigit():
+            stack.append(int(ch))
+        else:
+            b = stack.pop()
+            a = stack.pop()
+
+            if ch == '+':
+                stack.append(a + b)
+            elif ch == '-':
+                stack.append(a - b)
+            elif ch == '*':
+                stack.append(a * b)
+            elif ch == '/':
+                stack.append(a // b)
+
+    return stack.pop()
+
+exp = input("Enter postfix expression: ")
+print("Result:", evaluate_postfix(exp))
