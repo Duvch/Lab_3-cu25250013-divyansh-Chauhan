@@ -1,0 +1,84 @@
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.left = None
+        self.right = None
+
+def inorder(root):
+    if root:
+        inorder(root.left)
+        print(root.data, end=" ")
+        inorder(root.right)
+
+def preorder(root):
+    if root:
+        print(root.data, end=" ")
+        preorder(root.left)
+        preorder(root.right)
+
+def postorder(root):
+    if root:
+        postorder(root.left)
+        postorder(root.right)
+        print(root.data, end=" ")
+
+def inorder_iter(root):
+    stack = []
+    current = root
+
+    while current or stack:
+        while current:
+            stack.append(current)
+            current = current.left
+
+        current = stack.pop()
+        print(current.data, end=" ")
+        current = current.right
+
+def preorder_iter(root):
+    if not root:
+        return
+
+    stack = [root]
+
+    while stack:
+        node = stack.pop()
+        print(node.data, end=" ")
+
+        if node.right:
+            stack.append(node.right)
+        if node.left:
+            stack.append(node.left)
+
+def postorder_iter(root):
+    if not root:
+        return
+
+    s1 = [root]
+    s2 = []
+
+    while s1:
+        node = s1.pop()
+        s2.append(node)
+
+        if node.left:
+            s1.append(node.left)
+        if node.right:
+            s1.append(node.right)
+
+    while s2:
+        print(s2.pop().data, end=" ")
+
+root = Node(1)
+root.left = Node(2)
+root.right = Node(3)
+root.left.left = Node(4)
+root.left.right = Node(5)
+
+inorder(root)
+preorder(root)
+postorder(root)
+
+inorder_iter(root)
+preorder_iter(root)
+postorder_iter(root)
