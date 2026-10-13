@@ -1,0 +1,93 @@
+1)
+size = 5
+table = [[] for i in range(size)]
+
+def insert(x):
+    table[x % size].append(x)
+
+for x in [10, 15, 20, 7]:
+    insert(x)
+
+print(table)
+
+2)
+table = [None] * 5
+
+def insert(x):
+    global table
+
+    if sum(v is not None for v in table) >= len(table)//2:
+        old = [v for v in table if v is not None]
+        table = [None] * (2 * len(table))
+
+        for v in old:
+            insert(v)
+
+    i = x % len(table)
+
+    while table[i] is not None:
+        i = (i + 1) % len(table)
+
+    table[i] = x
+
+for x in [10, 15, 20, 7]:
+    insert(x)
+
+print(table)
+
+
+3)from collections import deque
+
+graph = {
+    0: [1, 2],
+    1: [0, 3],
+    2: [0, 3],
+    3: [1, 2]
+}
+
+n = len(graph)
+matrix = [[0] * n for i in range(n)]
+
+for u in graph:
+    for v in graph[u]:
+        matrix[u][v] = 1
+
+print("Adjacency Matrix:")
+for row in matrix:
+    print(row)
+
+print("Adjacency List:", graph)
+
+def dfs(start):
+    seen = set()
+    stack = [start]
+    order = []
+
+    while stack:
+        u = stack.pop()
+
+        if u not in seen:
+            seen.add(u)
+            order.append(u)
+            stack.extend(reversed(graph[u]))
+
+    return order
+
+def bfs(start):
+    seen = {start}
+    q = deque([start])
+    order = []
+
+    while q:
+        u = q.popleft()
+        order.append(u)
+
+        for v in graph[u]:
+            if v not in seen:
+                seen.add(v)
+                q.append(v)
+
+    return order
+
+print("DFS:", dfs(0))
+print("BFS:", bfs(0))
