@@ -1,0 +1,122 @@
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+top = None
+
+def push():
+    global top
+    n = Node(int(input("Enter value: ")))
+    n.next = top
+    top = n
+
+def pop():
+    global top
+    if top is None:
+        print("Stack Underflow")
+    else:
+        print("Popped:", top.data)
+        top = top.next
+
+def display():
+    t = top
+    while t:
+        print(t.data, end=" ")
+        t = t.next
+    print()
+
+while True:
+    print("\n1.Push  2.Pop  3.Display  4.Exit")
+    ch = int(input("Enter choice: "))
+
+    if ch == 1:
+        push()
+    elif ch == 2:
+        pop()
+    elif ch == 3:
+        display()
+    elif ch == 4:
+        break
+
+queue = []
+MAX = 5
+
+def enqueue():
+    if len(queue) == MAX:
+        print("Queue Full")
+    else:
+        queue.append(int(input("Enter value: ")))
+
+def dequeue():
+    if not queue:
+        print("Queue Empty")
+    else:
+        print("Deleted:", queue.pop(0))
+
+def display():
+    print(queue)
+
+while True:
+    print("\n1.Enqueue  2.Dequeue  3.Display  4.Exit")
+    ch = int(input("Enter choice: "))
+
+    if ch == 1:
+        enqueue()
+    elif ch == 2:
+        dequeue()
+    elif ch == 3:
+        display()
+    elif ch == 4:
+        break
+
+
+
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+front = rear = None
+
+def enqueue():
+    global front, rear
+    n = Node(int(input("Enter value: ")))
+
+    if rear is None:
+        front = rear = n
+    else:
+        rear.next = n
+        rear = n
+
+def dequeue():
+    global front, rear
+
+    if front is None:
+        print("Queue Empty")
+    else:
+        print("Deleted:", front.data)
+        front = front.next
+
+        if front is None:
+            rear = None
+
+def display():
+    t = front
+    while t:
+        print(t.data, end=" ")
+        t = t.next
+    print()
+
+while True:
+    print("\n1.Enqueue  2.Dequeue  3.Display  4.Exit")
+    ch = int(input("Enter choice: "))
+
+    if ch == 1:
+        enqueue()
+    elif ch == 2:
+        dequeue()
+    elif ch == 3:
+        display()
+    elif ch == 4:
+        break
