@@ -1,0 +1,53 @@
+1)
+
+import heapq
+
+def huffman(chars, freq):
+    heap = [[freq[i], chars[i]] for i in range(len(chars))]
+    heapq.heapify(heap)
+
+    while len(heap) > 1:
+        left = heapq.heappop(heap)
+        right = heapq.heappop(heap)
+
+        new = [left[0] + right[0], [left, right]]
+        heapq.heappush(heap, new)
+
+    codes = {}
+
+    def generate(node, code=""):
+        if isinstance(node[1], str):
+            codes[node[1]] = code
+        else:
+            generate(node[1][0], code + "0")
+            generate(node[1][1], code + "1")
+
+    generate(heap[0])
+    return codes
+
+chars = ['A', 'B', 'C', 'D']
+freq = [5, 9, 12, 13]
+
+print(huffman(chars, freq))
+
+2)
+
+import heapq
+
+def optimal_merge(files):
+    heapq.heapify(files)
+    total = 0
+
+    while len(files) > 1:
+        a = heapq.heappop(files)
+        b = heapq.heappop(files)
+
+        cost = a + b
+        total += cost
+
+        print("Merging:", a, b)
+        heapq.heappush(files, cost)
+
+    print("Minimum Cost:", total)
+
+optimal_merge([10, 20, 30, 40])
